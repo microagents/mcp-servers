@@ -11,7 +11,7 @@
   "bugs": "https://github.com/microagents/mcp-servers/issues",
   "type": "module",
   "bin": {
-    "mcp-server-github": "dist/index.js"
+    "mcp-server-github": "dist/run.js"
   },
   "files": [
     "dist"
