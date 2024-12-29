@@ -11,7 +11,7 @@
   "bugs": "https://github.com/microagents/mcp-servers/issues",
   "type": "module",
   "bin": {
-    "mcp-server-slack": "dist/index.js"
+    "mcp-server-slack": "dist/run.js"
   },
   "files": [
     "dist"
