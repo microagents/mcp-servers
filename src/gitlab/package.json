@@ -1,11 +1,14 @@
 {
-  "name": "@modelcontextprotocol/server-gitlab",
-  "version": "0.6.2",
+  "name": "@microagents/mcp-server-gitlab",
+  "version": "0.0.1",
   "description": "MCP server for using the GitLab API",
   "license": "MIT",
-  "author": "GitLab, PBC (https://gitlab.com)",
-  "homepage": "https://modelcontextprotocol.io",
-  "bugs": "https://github.com/modelcontextprotocol/servers/issues",
+  "author": "Microagents (https://microagents.dev)",
+  "contributors": [
+    "Anthropic, PBC (https://anthropic.com) - Original author"
+  ],
+  "homepage": "https://microagents.dev",
+  "bugs": "https://github.com/microagents/mcp-servers/issues",
   "type": "module",
   "bin": {
     "mcp-server-gitlab": "dist/index.js"

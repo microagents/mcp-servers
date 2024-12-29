@@ -1,14 +1,12 @@
-# Model Context Protocol servers
+# Microagents MCP Servers
 
-This repository is a collection of *reference implementations* for the [Model Context Protocol](https://modelcontextprotocol.io/) (MCP), as well as references
-to community built servers and additional resources.
+This repository contains the Model Context Protocol (MCP) servers used by the [Microagents](https://microagents.dev) application. This is a fork of the original [MCP reference implementations](https://modelcontextprotocol.io/) created by Anthropic, with modifications and additional servers to support Microagents' functionality.
 
-The servers in this repository showcase the versatility and extensibility of MCP, demonstrating how it can be used to give Large Language Models (LLMs) secure, controlled access to tools and data sources.
-Each MCP server is implemented with either the [Typescript MCP SDK](https://github.com/modelcontextprotocol/typescript-sdk) or [Python MCP SDK](https://github.com/modelcontextprotocol/python-sdk).
+Each MCP server is implemented using either the [Typescript MCP SDK](https://github.com/modelcontextprotocol/typescript-sdk) providing Large Language Models (LLMs) with secure, controlled access to various tools and data sources.
 
-## 🌟 Reference Servers
+## 🌟 Available Servers
 
-These servers aim to demonstrate MCP features and the Typescript and Python SDK.
+The following MCP servers are maintained for use with Microagents:
 
 - **[AWS KB Retrieval](src/aws-kb-retrieval-server)** - Retrieval from AWS Knowledge Base using Bedrock Agent Runtime
 - **[Brave Search](src/brave-search)** - Web and local search using Brave's Search API
@@ -25,7 +23,6 @@ These servers aim to demonstrate MCP features and the Typescript and Python SDK.
 - **[Sequential Thinking](src/sequentialthinking)** - Dynamic and reflective problem-solving through thought sequences
 - **[Slack](src/slack)** - Channel management and messaging capabilities
 
-
 ## 🤝 Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for information about contributing to this repository.
@@ -37,3 +34,7 @@ See [SECURITY.md](SECURITY.md) for reporting security vulnerabilities.
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+This repository is a fork of the original MCP reference implementations created by [Anthropic](https://anthropic.com). We are grateful for their work in developing the Model Context Protocol and the initial server implementations.

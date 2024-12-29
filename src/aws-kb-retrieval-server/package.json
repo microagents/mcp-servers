@@ -1,11 +1,14 @@
 {
-  "name": "@modelcontextprotocol/server-aws-kb-retrieval",
-  "version": "0.6.2",
+  "name": "@microagents/mcp-server-aws-kb-retrieval",
+  "version": "0.0.1",
   "description": "MCP server for AWS Knowledge Base retrieval using Bedrock Agent Runtime",
   "license": "MIT",
-  "author": "Anthropic, PBC (https://anthropic.com)",
-  "homepage": "https://modelcontextprotocol.io",
-  "bugs": "https://github.com/modelcontextprotocol/servers/issues",
+  "author": "Microagents (https://microagents.dev)",
+  "contributors": [
+    "Anthropic, PBC (https://anthropic.com) - Original author"
+  ],
+  "homepage": "https://microagents.dev",
+  "bugs": "https://github.com/microagents/mcp-servers/issues",
   "type": "module",
   "bin": {
     "mcp-server-aws-kb-retrieval": "dist/index.js"
