@@ -1,6 +1,6 @@
 {
   "name": "@microagents/mcp-server-github",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MCP server for using the GitHub API",
   "license": "MIT",
   "author": "Microagents (https://microagents.dev)",
@@ -10,6 +10,18 @@
   "homepage": "https://microagents.dev",
   "bugs": "https://github.com/microagents/mcp-servers/issues",
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./definitions": {
+      "types": "./dist/definitions/index.d.ts",
+      "import": "./dist/definitions/index.js"
+    }
+  },
   "bin": {
     "mcp-server-github": "dist/run.js"
   },

@@ -7,7 +7,7 @@ import {
   ListToolsRequestSchema,
   Tool,
 } from "@modelcontextprotocol/sdk/types.js";
-import { AVAILABLE_TOOLS } from "./tools.js";
+import { AVAILABLE_TOOLS } from "./definitions/tools.js";
 
 // Type definitions for tool arguments
 interface ListChannelsArgs {

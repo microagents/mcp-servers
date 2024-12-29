@@ -58,8 +58,8 @@ import {
   type SearchCodeResponse,
   type SearchIssuesResponse,
   type SearchUsersResponse
-} from './schemas.js';
-import { AVAILABLE_TOOLS } from "./tools.js";
+} from './definitions/schemas.js';
+import { AVAILABLE_TOOLS } from "./definitions/tools.js";
 
 const createServer = () => {
   const server = new Server(
