@@ -1,4 +1,4 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { JsonSchema7Type, zodToJsonSchema } from "zod-to-json-schema";
 import {
   CreateOrUpdateFileSchema,
   SearchRepositoriesSchema,
@@ -18,95 +18,101 @@ import {
   SearchUsersSchema,
   GetIssueSchema,
 } from "./schemas.js";
+import { Tool } from "@modelcontextprotocol/sdk/types.js";
 
-export const AVAILABLE_TOOLS = [
+type ToolSchema = NonNullable<Tool["inputSchema"]>;
+
+const toToolSchema = (schema: any): ToolSchema => zodToJsonSchema(schema) as ToolSchema;
+
+export const AVAILABLE_TOOLS: Tool[] = [
   {
-    name: "create_or_update_file",
+    name: "github:create_or_update_file",
     description: "Create or update a single file in a GitHub repository",
-    inputSchema: zodToJsonSchema(CreateOrUpdateFileSchema),
+    type: "function",
+    inputSchema: toToolSchema(CreateOrUpdateFileSchema),
   },
   {
-    name: "search_repositories",
+    name: "github:search_repositories",
     description: "Search for GitHub repositories",
-    inputSchema: zodToJsonSchema(SearchRepositoriesSchema),
+    inputSchema: toToolSchema(SearchRepositoriesSchema),
   },
   {
-    name: "create_repository",
+    name: "github:create_repository",
     description: "Create a new GitHub repository in your account",
-    inputSchema: zodToJsonSchema(CreateRepositorySchema),
+    inputSchema: toToolSchema(CreateRepositorySchema),
   },
   {
-    name: "get_file_contents",
+    name: "github:get_file_contents",
     description:
       "Get the contents of a file or directory from a GitHub repository",
-    inputSchema: zodToJsonSchema(GetFileContentsSchema),
+    inputSchema: toToolSchema(GetFileContentsSchema),
   },
   {
-    name: "push_files",
+    name: "github:push_files",
     description:
       "Push multiple files to a GitHub repository in a single commit",
-    inputSchema: zodToJsonSchema(PushFilesSchema),
+    inputSchema: toToolSchema(PushFilesSchema),
   },
   {
-    name: "create_issue",
+    name: "github:create_issue",
     description: "Create a new issue in a GitHub repository",
-    inputSchema: zodToJsonSchema(CreateIssueSchema),
+    inputSchema: toToolSchema(CreateIssueSchema),
   },
   {
-    name: "create_pull_request",
+    name: "github:create_pull_request",
     description: "Create a new pull request in a GitHub repository",
-    inputSchema: zodToJsonSchema(CreatePullRequestSchema),
+    inputSchema: toToolSchema(CreatePullRequestSchema),
   },
   {
-    name: "fork_repository",
+    name: "github:fork_repository",
     description:
       "Fork a GitHub repository to your account or specified organization",
-    inputSchema: zodToJsonSchema(ForkRepositorySchema),
+    inputSchema: toToolSchema(ForkRepositorySchema),
   },
   {
-    name: "create_branch",
+    name: "github:create_branch",
     description: "Create a new branch in a GitHub repository",
-    inputSchema: zodToJsonSchema(CreateBranchSchema),
+    inputSchema: toToolSchema(CreateBranchSchema),
   },
   {
-    name: "list_commits",
+    name: "github:list_commits",
     description: "Get list of commits of a branch in a GitHub repository",
-    inputSchema: zodToJsonSchema(ListCommitsSchema),
+    inputSchema: toToolSchema(ListCommitsSchema),
   },
   {
-    name: "list_issues",
+    name: "github:list_issues",
     description: "List issues in a GitHub repository with filtering options",
-    inputSchema: zodToJsonSchema(ListIssuesOptionsSchema),
+    inputSchema: toToolSchema(ListIssuesOptionsSchema),
   },
   {
-    name: "update_issue",
+    name: "github:update_issue",
     description: "Update an existing issue in a GitHub repository",
-    inputSchema: zodToJsonSchema(UpdateIssueOptionsSchema),
+    inputSchema: toToolSchema(UpdateIssueOptionsSchema),
   },
   {
-    name: "add_issue_comment",
+    name: "github:add_issue_comment",
     description: "Add a comment to an existing issue",
-    inputSchema: zodToJsonSchema(IssueCommentSchema),
+    inputSchema: toToolSchema(IssueCommentSchema),
   },
   {
-    name: "search_code",
+    name: "github:search_code",
     description: "Search for code across GitHub repositories",
-    inputSchema: zodToJsonSchema(SearchCodeSchema),
+    inputSchema: toToolSchema(SearchCodeSchema),
   },
   {
-    name: "search_issues",
+    name: "github:search_issues",
     description:
       "Search for issues and pull requests across GitHub repositories",
-    inputSchema: zodToJsonSchema(SearchIssuesSchema),
+    inputSchema: toToolSchema(SearchIssuesSchema),
   },
   {
-    name: "search_users",
+    name: "github:search_users",
     description: "Search for users on GitHub",
-    inputSchema: zodToJsonSchema(SearchUsersSchema),
+    inputSchema: toToolSchema(SearchUsersSchema),
   },
   {
-    name: "get_issue",
+    name: "github:get_issue",
     description: "Get details of a specific issue in a GitHub repository.",
-    inputSchema: zodToJsonSchema(GetIssueSchema),
+    inputSchema: toToolSchema(GetIssueSchema),
   },
 ];
