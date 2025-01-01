@@ -2,7 +2,7 @@ import { Tool } from "@modelcontextprotocol/sdk/types.js";
 
 // Tool definitions
 const listChannelsTool: Tool = {
-    name: "slack:list_channels",
+    name: "slack_list_channels",
     description: "List public channels in the workspace with pagination",
     inputSchema: {
       type: "object",
@@ -22,7 +22,7 @@ const listChannelsTool: Tool = {
   };
   
   const postMessageTool: Tool = {
-    name: "slack:post_message",
+    name: "slack_post_message",
     description: "Post a new message to a Slack channel",
     inputSchema: {
       type: "object",
@@ -41,7 +41,7 @@ const listChannelsTool: Tool = {
   };
   
   const replyToThreadTool: Tool = {
-    name: "slack:reply_to_thread",
+    name: "slack_reply_to_thread",
     description: "Reply to a specific message thread in Slack",
     inputSchema: {
       type: "object",
@@ -64,7 +64,7 @@ const listChannelsTool: Tool = {
   };
   
   const addReactionTool: Tool = {
-    name: "slack:add_reaction",
+    name: "slack_add_reaction",
     description: "Add a reaction emoji to a message",
     inputSchema: {
       type: "object",
@@ -87,7 +87,7 @@ const listChannelsTool: Tool = {
   };
   
   const getChannelHistoryTool: Tool = {
-    name: "slack:get_channel_history",
+    name: "slack_get_channel_history",
     description: "Get recent messages from a channel",
     inputSchema: {
       type: "object",
@@ -107,7 +107,7 @@ const listChannelsTool: Tool = {
   };
   
   const getThreadRepliesTool: Tool = {
-    name: "slack:get_thread_replies",
+    name: "slack_get_thread_replies",
     description: "Get all replies in a message thread",
     inputSchema: {
       type: "object",
@@ -126,7 +126,7 @@ const listChannelsTool: Tool = {
   };
   
   const getUsersTool: Tool = {
-    name: "slack:get_users",
+    name: "slack_get_users",
     description:
       "Get a list of all users in the workspace with their basic profile information",
     inputSchema: {
@@ -146,7 +146,7 @@ const listChannelsTool: Tool = {
   };
   
   const getUserProfileTool: Tool = {
-    name: "slack:get_user_profile",
+    name: "slack_get_user_profile",
     description: "Get detailed profile information for a specific user",
     inputSchema: {
       type: "object",
