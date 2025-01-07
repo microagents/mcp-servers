@@ -1,6 +1,6 @@
 {
   "name": "@microagents/mcp-server-github",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "MCP server for using the GitHub API",
   "license": "MIT",
   "author": "Microagents (https://microagents.dev)",
