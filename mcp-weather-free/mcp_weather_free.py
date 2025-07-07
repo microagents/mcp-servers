@@ -14,7 +14,7 @@ om = openmeteo_requests.Client()
 def get_weather(
     latitude: float,
     longitude: float,
-    location_name: Optional[str] = None,
+    location_name: str = '',
     temperature_unit: str = "celsius",
     wind_speed_unit: str = "kmh",
     precipitation_unit: str = "mm"
@@ -115,7 +115,7 @@ def get_weather(
 
         return {
             "location": {
-                "name": location_name or f"{latitude}, {longitude}",
+                "name": location_name != '' or f"{latitude}, {longitude}",
                 "latitude": response.Latitude(),
                 "longitude": response.Longitude(),
                 "elevation": response.Elevation(),
@@ -138,7 +138,7 @@ def get_weather(
             "location": {
                 "latitude": latitude,
                 "longitude": longitude,
-                "name": location_name or f"{latitude}, {longitude}"
+                "name": location_name != '' or f"{latitude}, {longitude}"
             }
         }
 
