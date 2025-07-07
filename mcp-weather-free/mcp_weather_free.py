@@ -146,7 +146,7 @@ def get_weather(
 @mcp.tool()
 def get_weather_by_city(
     city: str,
-    country_code: Optional[str] = None,
+    country_code: str = '',
     temperature_unit: str = "celsius",
     wind_speed_unit: str = "kmh",
     precipitation_unit: str = "mm"
@@ -156,7 +156,7 @@ def get_weather_by_city(
 
     Args:
         city: Name of the city
-        country_code: Optional 2-letter country code (e.g., "US", "GB")
+        country_code: Optional(default='') 2-letter country code (e.g., "US", "GB")
         temperature_unit: Temperature unit (celsius or fahrenheit)
         wind_speed_unit: Wind speed unit (kmh, ms, mph, kn)
         precipitation_unit: Precipitation unit (mm or inch)
