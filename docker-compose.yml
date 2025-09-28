@@ -1,0 +1,135 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: "traefik:v3.4"
+    container_name: "traefik"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - mcp-network
+    command:
+      # API Settings
+      - "--api.insecure=false"
+      - "--api.dashboard=true"
+
+      # Provider Settings
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=mcp-network"
+
+      # Entrypoints
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.websecure.address=:443"
+      - "--entryPoints.websecure.http.tls=true"
+
+      # HTTP to HTTPS redirect
+      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
+
+      # Let's Encrypt configuration
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=irshad@microagents.io" # Replace with your email
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+
+      # Logging
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080" # Traefik dashboard
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    labels:
+      - "traefik.enable=true"
+
+      # Dashboard authentication (optional - uncomment and set credentials)
+      # - "traefik.http.routers.dashboard.middlewares=dashboard-auth"
+      # - "traefik.http.middlewares.dashboard-auth.basicauth.users=admin:$$2y$$10$$..." # Generate with htpasswd
+
+  mcp-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: express-mcp-gateway
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - mcp-network
+    labels:
+      - "traefik.enable=true"
+
+      # Main service routing
+      - "traefik.http.routers.mcp-gateway.rule=Host(`mcp-servers.ag6.ai`)"
+      - "traefik.http.routers.mcp-gateway.entrypoints=websecure"
+      - "traefik.http.routers.mcp-gateway.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.mcp-gateway.service=mcp-gateway"
+      - "traefik.http.services.mcp-gateway.loadbalancer.server.port=3000"
+
+      # Security headers middleware
+      - "traefik.http.middlewares.secure-headers.headers.frameDeny=true"
+      - "traefik.http.middlewares.secure-headers.headers.sslRedirect=true"
+      - "traefik.http.middlewares.secure-headers.headers.browserXssFilter=true"
+      - "traefik.http.middlewares.secure-headers.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.secure-headers.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.secure-headers.headers.stsPreload=true"
+      - "traefik.http.middlewares.secure-headers.headers.stsSeconds=31536000"
+      - "traefik.http.middlewares.secure-headers.headers.customRequestHeaders.X-Forwarded-Proto=https"
+
+      # CORS headers for MCP protocol
+      - "traefik.http.middlewares.mcp-cors.headers.accessControlAllowOriginList=*"
+      - "traefik.http.middlewares.mcp-cors.headers.accessControlAllowHeaders=Content-Type,mcp-session-id,Authorization"
+      - "traefik.http.middlewares.mcp-cors.headers.accessControlAllowMethods=GET,POST,OPTIONS"
+      - "traefik.http.middlewares.mcp-cors.headers.accessControlExposeHeaders=Mcp-Session-Id"
+
+      # Apply middlewares
+      - "traefik.http.routers.mcp-gateway.middlewares=secure-headers,mcp-cors"
+
+  # Optional: Development service (uncomment for development)
+  # mcp-gateway-dev:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: builder
+  #   container_name: express-mcp-gateway-dev
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=3000
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   command: npm run dev
+  #   restart: unless-stopped
+  #   networks:
+  #     - mcp-network
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.mcp-gateway-dev.rule=Host(`dev.mcp-servers.ag6.ai`)"
+  #     - "traefik.http.routers.mcp-gateway-dev.entrypoints=websecure"
+  #     - "traefik.http.routers.mcp-gateway-dev.tls.certresolver=letsencrypt"
+  #     - "traefik.http.routers.mcp-gateway-dev.service=mcp-gateway-dev"
+  #     - "traefik.http.services.mcp-gateway-dev.loadbalancer.server.port=3000"
+  #     - "traefik.http.routers.mcp-gateway-dev.middlewares=secure-headers,mcp-cors"
+
+networks:
+  mcp-network:
+    name: mcp-network
+    driver: bridge
